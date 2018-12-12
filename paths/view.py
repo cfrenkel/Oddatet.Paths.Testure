@@ -21,31 +21,33 @@ class View:
         except:
             print("Can't read the image")
 
-        self.cone.draw_paths()
+        # self.cone.draw_paths(self.cone.df.h)
 
 
     def switch_cases(self):
         x = None
-
-        while(x is None):
+        while( x is None and x != '-1'):
 
            filters = {
-               1: 'paths by time',
-               2: 'paths by date and time',
-               3: 'paths per location',
-               4: 'paths per location and time',
-               5: 'paths per location, date and time'
+               '-1': self.cone.exit,
+               '1': self.cone.rap_filter_by_time,
+               '2': self.cone.rap_filter_by_date_time,
+               '3': self.cone.rap_filter_by_chossen_squere,
+               '4': self.cone.rap_filter_by_area,
+               # 5: 'paths per location, date and time'
            }
            msg = """
                        1: paths by time
                        2: paths by date and time
-                       3: paths per location
-                       4: paths per location and time
-                       5: paths per location, date and time
+                       3: paths per chosen square location
+                       4: paths per location
+             
+                       
+                       to exit press -1
                    """
 
            inp = input(f'to choose your filter press :{msg}\n ')
-           x = filters.get(inp)
+           x = inp
         return filters[x]
 
 
