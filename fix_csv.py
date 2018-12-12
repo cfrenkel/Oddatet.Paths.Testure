@@ -1,13 +1,11 @@
-
 import logging
 
 good_line = 0
 bad_line = 0
-with open("oddetect.csv") as f, open("fixed.csv", "w") as w:
-
-    w.write("frameNum,x,y,objectNum,size,sequenceNum,TBD,TBD,TBD,filename,start,path time,delta time")
+with open("data/oddetect.csv") as f, open("data/fixed.csv", "w") as w:
+    # w.write("frameNum,x,y,objectNum,size,sequenceNum,TBD,TBD,TBD,filename,start,path time,delta time,TBD\n")
     for line in f:
-        l = line.replace(' ','').split(',')
+        l = line.replace(', ', ',').split(',')
         new = (','.join(l))
         if (len(l) == 14):
             w.write(new)
@@ -18,4 +16,3 @@ with open("oddetect.csv") as f, open("fixed.csv", "w") as w:
 
 print(good_line)
 print(bad_line)
-

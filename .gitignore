@@ -3,6 +3,8 @@ __pycache__/
 /data/
 .idea
 .ipynb_checkpoints
+venv
+
 
 # To keep Udi and all the participants sane during the Hackathon
 Pipfile.lock  # This file should actually BE in the repository
