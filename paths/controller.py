@@ -1,40 +1,28 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 from pathlib import Path
+from paths.model import Model
 
 class Controller:
-    def __init__(self):
-        pass
+    def __init__(self,fn,im):
+        self.m = Model()
+        self.m.read_data(fn)
+        self.m.read_image(im)
 
-    def read_data(self,name):
-        new_name = name[:name.find('.')] + ".pkl.xz"
-        file = Path(new_name)
-        if not file.exists():
-            col_names = ["frame", "x", "y", "obj", "size", "seq", "tbd1", "tbd2", "tbd3", "filename", "time", "path_time",
-                         "delta_time", "tbd4"]
-            use_cols = ["x", "y", "obj", "size", "seq", "filename", "time", "delta_time"]
-            df = pd.read_csv(name, names=col_names, usecols=use_cols, parse_dates=['time'],
-                             infer_datetime_format=True)
-            df['time'] = df['time'] + pd.to_timedelta(df['delta_time'])
-            df = df.drop(['delta_time'], axis=1)
-            gl_int = df.select_dtypes(include=['int64'])
-            converted_int = gl_int.apply(pd.to_numeric, downcast='unsigned')
-            df[converted_int.columns] = converted_int
-
-            df.to_pickle(new_name)
-        self.df = pd.read_pickle(new_name)
-        self.df_by_obj = self.df.set_index(['obj', 'filename']).sort_index()
-        self.filter_req = self.df
-    def read_image(self,name):
-       file = plt.imread(name)
-       self.image = file
 
     def draw_paths(self, d):
+          self.m.image = plt.imread(self.m.name)
           pa = d.groupby(['obj', 'filename']).size()
-          plt.imshow(self.image)
+          plt.imshow(self.m.image)
+          # if(len(pa) <= 200):
+          #     for r in pa.index:
+          #         oo = self.df_by_obj.loc[r]
+          #         plt.subplot(oo.x, oo.y)
+          # else:
           for r in pa.index:
-              oo = self.df_by_obj.loc[r]
+              oo = self.m.df_by_obj.loc[r]
               plt.plot(oo.x, oo.y)
+
           plt.show()
 
     def filter_by_date_time(self, d,b1, b2):
@@ -64,8 +52,8 @@ class Controller:
 
     def filter_by_chossen_squere(self,d, x, y):
 
-        width = self.image.shape[1]
-        height = self.image.shape[0]
+        width = self.m.image.shape[1]
+        height = self.m.image.shape[0]
         num_segmentation = 10
         r = int(x)
         c = int(y)
@@ -76,56 +64,58 @@ class Controller:
     def rap_filter_by_time(self):
         q = input("Do you want to refresh the data y/n?")
         if q == 'y':
-           self.filter_req = self.df
+           self.m.filter_req = self.m.df
         t1 = input('enter first range of time in format hh:mm:ss\n')
         t2 = input('enter last range of time in format hh:mm:ss\n')
 
-        self.filter_req = self.filter_by_time(self.filter_req,t1,t2)
-        self.draw_paths(self.filter_req)
+        self.m.filter_req = self.filter_by_time(self.m.filter_req,t1,t2)
+        self.draw_paths(self.m.filter_req)
         return
 
 
     def rap_filter_by_date_time(self):
         q = input("Do you want to refresh the data y/n?")
         if q == 'y':
-            self.filter_req = self.df
+            self.m.filter_req = self.m.df
         t1 = input('enter first range of time in format yyyy-mm-dd hh:mm:ss\n')
         t2 = input('enter last range of time in format yyyy-mm-dd hh:mm:ss\n')
 
-        self.filter_req = self.filter_by_date_time(self.filter_req, t1, t2)
-        self.draw_paths(self.filter_req)
+        self.m.filter_req = self.filter_by_date_time(self.m.filter_req, t1, t2)
+        self.draw_paths(self.m.filter_req)
         return
 
     def draw_grid(self):
-        img = self.image
+        img = self.m.image
         for i in range(50, 1000, 50):
             img[i:i + 5, :] = 0
             img[:, i:i + 5] = 0
 
         plt.imshow(img)
+        plt.show()
+        # plt.imshow(img)
         plt.close()
 
     def rap_filter_by_chossen_squere(self):
         q = input("Do you want to refresh the data y/n?")
         if q == 'y':
-            self.filter_req = self.df
+            self.m.filter_req = self.m.df
         elif q == 'n':
-            self.filter_req = self.filter_req
+            self.m.filter_req = self.m.filter_req
         self.draw_grid()
 
         x = input('enter x of wanted square (top left pixel)\n')
         y = input('enter y of wanted square (top left pixel)\n')
 
-        self.filter_req = self.filter_by_chossen_squere(self.filter_req, x, y)
-        self.draw_paths(self.filter_req)
+        self.m.filter_req = self.filter_by_chossen_squere(self.m.filter_req, x, y)
+        self.draw_paths(self.m.filter_req)
         return
 
     def rap_filter_by_area(self):
         q = input("Do you want to refresh the data y/n?")
         if q == 'y':
-            self.filter_req = self.df
+            self.m.filter_req = self.m.df
         elif q == 'n':
-            self.filter_req = self.filter_req
+            self.m.filter_req = self.m.filter_req
         self.draw_grid()
 
         x1 = input('enter x of wanted square (top left pixel)\n')
@@ -140,11 +130,12 @@ class Controller:
 
 
 
-        self.filter_req = self.filter_by_area(self.filter_req, x1, y1, x2,y2)
-        self.draw_paths(self.filter_req)
+        self.m.filter_req = self.filter_by_area(self.m.filter_req, x1, y1, x2,y2)
+        self.draw_paths(self.m.filter_req)
         return
 
     def exit(self):
+        print("👋👋👋 Goodbye 👋👋👋")
         return -1
 
 

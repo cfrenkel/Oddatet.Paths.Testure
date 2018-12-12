@@ -5,11 +5,12 @@ import paths.controller as c
 class View:
 
     def __init__(self):
-        self.cone = c.Controller()
+
         # self.file_name = input("Please enter the file name")
         # self.im_name = input("Please enter the image name or enter to use default image")
         self.file_name = "data/fixed.csv"
         self.im_name = "data/paths0.png"
+        self.cone = c.Controller(self.file_name, self.im_name )
         if not self.im_name:
             self.im_name = "data/paths0.png"
         try:
@@ -21,7 +22,11 @@ class View:
         except:
             print("Can't read the image")
 
-        # self.cone.draw_paths(self.cone.df.h)
+    def run(self):
+        x = 100
+        while (x != -1):
+            x = self.switch_cases()
+            x = x()
 
 
     def switch_cases(self):
@@ -34,7 +39,6 @@ class View:
                '2': self.cone.rap_filter_by_date_time,
                '3': self.cone.rap_filter_by_chossen_squere,
                '4': self.cone.rap_filter_by_area,
-               # 5: 'paths per location, date and time'
            }
            msg = """
                        1: paths by time
