@@ -50,16 +50,21 @@ class Controller:
 
         return top
 
-    def filter_by_chossen_squere(self,d, x, y):
+    def filter_by_chossen_squere(self, d, location_list):
 
         width = self.m.image.shape[1]
         height = self.m.image.shape[0]
         num_segmentation = 10
-        r = int(x)
-        c = int(y)
-        top_left = (c * width / num_segmentation, (r + 1) * height / num_segmentation)
-        bottom_right = ((c + 1) * width / num_segmentation, r * height / num_segmentation)
-        return self.filter_by_area(d,top_left[0],bottom_right[1],bottom_right[0],top_left[1])
+        use_cols = ["x", "y", "obj", "size", "seq", "filename", "time"]
+        t = pd.DataFrame([], columns=use_cols)
+        for i in location_list:
+            r = i[1]
+            c = i[0]
+            top_left = (c * width / num_segmentation, (r + 1) * height / num_segmentation)
+            bottom_right = ((c + 1) * width / num_segmentation, r * height / num_segmentation)
+            t = t.append(self.filter_by_area(d, top_left[0], bottom_right[1], bottom_right[0], top_left[1]))
+            print(t)
+        return t
 
     def rap_filter_by_time(self):
         q = input("Do you want to refresh the data y/n?")
@@ -103,10 +108,8 @@ class Controller:
             self.m.filter_req = self.m.filter_req
         self.draw_grid()
 
-        x = input('enter x of wanted square (top left pixel)\n')
-        y = input('enter y of wanted square (top left pixel)\n')
-
-        self.m.filter_req = self.filter_by_chossen_squere(self.m.filter_req, x, y)
+        l = input("Enter list of points on the picture\n")
+        self.m.filter_req = self.filter_by_chossen_squere(self.m.filter_req, eval(l))
         self.draw_paths(self.m.filter_req)
         return
 
@@ -127,8 +130,6 @@ class Controller:
         x2 = int(x2)
         y1 = int(y1)
         y2 = int(y2)
-
-
 
         self.m.filter_req = self.filter_by_area(self.m.filter_req, x1, y1, x2,y2)
         self.draw_paths(self.m.filter_req)
