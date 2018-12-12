@@ -43,9 +43,11 @@ class View:
     def draw_paths(self):
         d = self.df.groupby(['obj','filename']).size().sample(20)
         df_by_obj = self.df.set_index(['obj', 'filename']).sort_index()
+        plt.imshow(self.image)
         for r in d.index:
             oo = df_by_obj.loc[r]
             plt.plot(oo.x, oo.y)
+        plt.show()
 
     def __init__(self):
         self.file_name = input("Please enter the file name")
@@ -64,7 +66,6 @@ class View:
 
 
         print(self.df.head(10))
-        Image._show(self.image)
 
 
 
