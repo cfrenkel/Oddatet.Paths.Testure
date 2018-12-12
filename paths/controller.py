@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 from pathlib import Path
+
 class Controller:
     def __init__(self):
         pass
@@ -9,7 +10,6 @@ class Controller:
         new_name = name[:name.find('.')] + ".pkl.xz"
         file = Path(new_name)
         if not file.exists():
-            print("in!!!")
             col_names = ["frame", "x", "y", "obj", "size", "seq", "tbd1", "tbd2", "tbd3", "filename", "time", "path_time",
                          "delta_time", "tbd4"]
             use_cols = ["x", "y", "obj", "size", "seq", "filename", "time", "delta_time"]
