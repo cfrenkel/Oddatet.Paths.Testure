@@ -8,6 +8,7 @@ class Model:
     def __init__(self):
         pass
 
+
     def read_data(self,name):
         new_name = name[:name.find('.')] + ".pkl.xz"
         file = Path(new_name)
@@ -32,3 +33,5 @@ class Model:
        file = plt.imread(name)
        self.image = file
        self.name = name
+
+
