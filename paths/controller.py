@@ -14,14 +14,11 @@ class Controller:
         except:
             print("Can't read the file")
             exit()
-
         try:
             self.m.read_image(im)
         except:
             print("Can't read the image")
             exit()
-
-
 
     def draw_paths(self, d):
           self.m.image = plt.imread(self.m.name)
@@ -64,7 +61,6 @@ class Controller:
         return top
 
     def filter_by_chossen_squere(self, d, location_list):
-
         width = self.m.image.shape[1]
         height = self.m.image.shape[0]
         num_segmentation = 10
@@ -175,7 +171,9 @@ class Controller:
 
     def cheak_list(self, l):
         for i in l:
-            if not isinstance(i, int):
+            try:
+                i = int(i)
+            except:
                 return False
         return True
 
