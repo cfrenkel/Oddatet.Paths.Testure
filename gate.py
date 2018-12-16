@@ -8,6 +8,7 @@ class Main_gui(tk.Frame):
 
         w = tk.Label(root, text=" Wellcome to our program!", fg="green", font="Verdana 20 bold")
         w.pack()
+
         f_name = tk.Label(root, text="Enter your file name ").pack()
         self.f_name = tk.Entry(root)
         self.f_name.insert(0, " ")
