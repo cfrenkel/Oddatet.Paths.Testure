@@ -3,13 +3,18 @@ import paths.controller as c
 class View:
 
     def __init__(self):
-      self.load()
+        pass
 
-    def load(self):
+    def load(self, filename, imname):
+        print("yes i can!\n")
         # self.file_name = input("Please enter the file name")
         # self.im_name = input("Please enter the image name or enter to use default image")
         self.file_name = "data/fixed.csv"
         self.im_name = "data/paths0.png"
+
+        # self.file_name = filename
+        # self.im_name = imname
+
         if not self.im_name:
             self.im_name = "data/paths0.png"
         self.cone = c.Controller(self.file_name, self.im_name)
@@ -19,7 +24,6 @@ class View:
         while (x != -1):
             x = self.switch_cases()
             x = x()
-
 
     def switch_cases(self):
         x = None
@@ -41,28 +45,10 @@ class View:
                        4: paths per location
                        5: paths per time and location
                        6: paths per date,time and location
-
+                       
                        to exit press -1
                    """
 
            inp = input(f'to choose your filter press :{msg}\n ')
            x = inp
-
-           try:
-             filters[x]
-           except:
-               print("Enter a valid key!!!\n")
-               return self.switch_cases()
-
         return filters[x]
-
-
-
-
-
-
-
-
-
-
-

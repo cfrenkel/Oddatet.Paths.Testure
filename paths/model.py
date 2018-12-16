@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 from pathlib import Path
-
+import os
 
 class Model:
 
@@ -10,9 +10,8 @@ class Model:
 
 
     def read_data(self,name):
-        new_name = name[:name.find('.')] + ".pkl.xz"
-        file = Path(new_name)
-        if not file.exists():
+        new_name = name[:name.find('.')] + '.pkl.xz'
+        if not os.path.exists(new_name):
             col_names = ["frame", "x", "y", "obj", "size", "seq", "tbd1", "tbd2", "tbd3", "filename", "time", "path_time",
                          "delta_time", "tbd4"]
             use_cols = ["x", "y", "obj", "size", "seq", "filename", "time", "delta_time"]
@@ -25,6 +24,7 @@ class Model:
             df[converted_int.columns] = converted_int
 
             df.to_pickle(new_name)
+
         self.df = pd.read_pickle(new_name)
         self.df_by_obj = self.df.set_index(['obj', 'filename']).sort_index()
         self.filter_req = self.df

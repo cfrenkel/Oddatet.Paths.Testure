@@ -14,6 +14,9 @@ ipython = "*"
 jupyter = "*"
 tables = "*"
 pil = "*"
+cv2 = "*"
+pyqt5 = "*"
+pyqtgraph = "*"
 
 [requires]
 python_version = "3.7"

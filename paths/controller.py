@@ -127,26 +127,26 @@ class Controller:
             return
 
         self.m.filter_req = self.filter_by_date_time(self.m.filter_req, t1, t2)
-        self.draw_paths(self.m.filter_req)
+        # self.draw_paths(self.m.filter_req)
         return
 
     def rap_filter_by_chossen_squere(self, l, v):
 
         self.refresh_data(v)
-        self.draw_grid()
+        # self.draw_grid()
 
         #l = input("Enter list of wanted square on the picture\n")
         l = l.split(" ")
         if self.cheak_list(l):
             self.m.filter_req = self.filter_by_chossen_squere(self.m.filter_req, self.calc_points(l))
-            self.draw_paths(self.m.filter_req)
+            # self.draw_paths(self.m.filter_req)
         else:
             print("Invalid Input :(\n")
         return
 
     def rap_filter_by_area(self, x1, y1, x2, y2, v):
         self.refresh_data(v)
-        self.draw_grid()
+        # self.draw_grid()
 
         # x1 = input('enter x of wanted square (top left pixel)\n')
         # y1 = input('enter y of wanted square (top left pixel)\n')
@@ -171,12 +171,12 @@ class Controller:
         self.m.filter_req = self.filter_by_time(self.m.filter_req, t1, t2)
 
         print("Good now choose your squares\n")
-        self.draw_grid()
+        # self.draw_grid()
 
         # l = input("Enter list of wanted square on the picture\n")
         l = l.split(" ")
         self.m.filter_req = self.filter_by_chossen_squere(self.m.filter_req, self.calc_points(l))
-        self.draw_paths(self.m.filter_req)
+        # self.draw_paths(self.m.filter_req)
 
     def rap_filter_by_date_time_chossen_squere(self, t1, t2, l, v):
 
