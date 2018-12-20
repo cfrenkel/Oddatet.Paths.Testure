@@ -8,8 +8,8 @@
 
 ## Screenshots 
 
-![SCREESHOT DECSRIPTION](screen/wellcome.JPG)
-![SCREESHOT DECSRIPTION](screen/second.JPG)
+![SCREESHOT DECSRIPTION](screen/wellcome.png)
+![SCREESHOT DECSRIPTION](screen/second.png)
 
 ### Gui Interface:
 
