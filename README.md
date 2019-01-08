@@ -4,8 +4,6 @@
 * Chani Frenkel
 * Elisheva Shmuel
 
-## How to Run This program
-
 ## Screenshots 
 
 ![SCREESHOT DECSRIPTION](screen/wellcome.png)
